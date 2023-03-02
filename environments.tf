@@ -12,3 +12,12 @@ provider "aws" {
   secret_key = var.aws_secret_key
   region = var.aws_region
 }
+
+resource "aws_instance" "salt_instance" {
+  ami = "ami-0d50e5e845c552faf"
+  instance_type = "t2.micro"
+  count = var.instance_count
+  tags = {
+    Name = "salt_instance-${count.index}"
+  }
+}
