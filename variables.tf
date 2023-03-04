@@ -7,12 +7,12 @@ variable "aws_secret_key" {
 }
 
 variable "aws_region" {
-  type = string
+  type    = string
   default = "us-west-1"
 }
 
 variable "instance_count" {
-  type = number
+  type    = number
   default = 3
 }
 
