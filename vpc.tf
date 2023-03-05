@@ -11,10 +11,10 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_subnet" "salt_public_subnet" {
-  vpc_id     = aws_vpc.salt_environment.id
-  cidr_block = "10.0.${1+count.index}.0/24"
-  count = "${length(data.aws_availability_zones.available.names)}"
-  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+  vpc_id                  = aws_vpc.salt_environment.id
+  cidr_block              = "10.0.${1 + count.index}.0/24"
+  count                   = length(data.aws_availability_zones.available.names)
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
 }
 
@@ -28,7 +28,7 @@ resource "aws_route_table" "public_rt" {
 }
 
 resource "aws_route_table_association" "public_rta" {
-  count = "${length(data.aws_availability_zones.available.names)}"
-  subnet_id = "${element(aws_subnet.salt_public_subnet.*.id, count.index)}"
+  count          = length(data.aws_availability_zones.available.names)
+  subnet_id      = element(aws_subnet.salt_public_subnet.*.id, count.index)
   route_table_id = aws_route_table.public_rt.id
 }
