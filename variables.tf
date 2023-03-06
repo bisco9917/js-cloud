@@ -13,28 +13,10 @@ variable "aws_instance_type" {
 
 variable "aws_region" {
   type    = string
-  default = "us-west-1"
+  default = "us-east-1"
 }
 
 variable "instance_count" {
   type    = number
-  default = 3
+  default = 6
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
