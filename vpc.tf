@@ -1,9 +1,9 @@
-data "aws_availability_zones" "available" {
-  state = "available"
-}
-
 resource "aws_vpc" "js_vpc" {
   cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "js-cloud-vpc"
+  }
 }
 
 resource "aws_internet_gateway" "js_internet_gateway" {

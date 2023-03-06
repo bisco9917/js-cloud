@@ -1,21 +1,12 @@
-data "aws_ami" "ubuntu" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["099720109477"] # Canonical
-}
 
-resource "aws_instance" "instance" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+
+resource "aws_instance" "js_instance" {
+  ami           = data.aws_ami.js_ami.id
+  instance_type = var.aws_instance_type
   count         = var.instance_count
+  subnet_id     = element(aws_subnet.js_subnet.*.id, count.index)
+
   tags = {
-    Name = "js-cloud-${count.index}"
+    Name = "js-cloud-${count.index + 1}"
   }
 }
