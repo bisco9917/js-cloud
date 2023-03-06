@@ -1,11 +1,11 @@
-resource "aws_security_group" "allow_http_https" {
-  name        = "allow_http_https"
+resource "aws_security_group" "js_security_group" {
+  name        = "allow-http-https"
   description = "Allow HTTP and HTTPS inbound traffic"
-  vpc_id      = aws_vpc.salt_environment.id
+  vpc_id      = aws_vpc.js_vpc.id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_http" {
-  security_group_id = aws_security_group.allow_http_https.id
+  security_group_id = aws_security_group.js_security_group.id
 
   description = "Allow HTTP inbound"
   ip_protocol = "tcp"
@@ -15,7 +15,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_https" {
-  security_group_id = aws_security_group.allow_http_https.id
+  security_group_id = aws_security_group.js_security_group.id
 
   description = "Allow HTTPS inbound"
   ip_protocol = "tcp"
@@ -25,7 +25,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_out" {
-  security_group_id = aws_security_group.allow_http_https.id
+  security_group_id = aws_security_group.js_security_group.id
 
   description = "Allow all traffic outbound"
   ip_protocol = "-1"
